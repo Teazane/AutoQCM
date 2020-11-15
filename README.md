@@ -25,6 +25,34 @@ Il ne reste plus qu'à lancer le projet avec `flask run`.
 - data_management : contient les fichiers nécessaires à la lecture et constitution de la BDD
     - TODO
 
+## Erreurs connues
+### Erreur de Numpy lors du chargement des données Excel
+Reproduction de l'erreur :
+```
+> python data_loader.py
+ ** On entry to DGEBAL parameter number  3 had an illegal value
+ ** On entry to DGEHRD  parameter number  2 had an illegal value
+ ** On entry to DORGHR DORGQR parameter number  2 had an illegal value
+ ** On entry to DHSEQR parameter number  4 had an illegal value
+Traceback (most recent call last):
+  File "data_loader.py", line 1, in <module>
+    from pandas import read_excel, read_csv
+  File "C:\...\AutoQCM\env\lib\site-packages\pandas\__init__.py", line 11, in <module>
+    __import__(dependency)
+  File "D:\...\AutoQCM\env\lib\site-packages\numpy\__init__.py", line 305, in <module>
+    _win_os_check()
+  File "D:\...\AutoQCM\env\lib\site-packages\numpy\__init__.py", line 302, in _win_os_check
+    raise RuntimeError(msg.format(__file__)) from None
+RuntimeError: The current Numpy installation ('D:\\...\\AutoQCM\\env\\lib\\site-packages\\numpy\\__init__.py') fails to pass a sanity check due to a bug in the windows runtime. See this issue for more information: https://tinyurl.com/y3dm3h86
+```
+Résolution de l'erreur :
+
+La version de Numpy incluse dans la bibliothèque Pandas cause une erreur.
+Il faut donc en changer la version de 1.19.4 à 1.19.4:
+```
+> pip install --upgrade numpy==1.19.3
+```
+
 ## Built with / using
 - Python (3.6) - see used libs in `requirements.txt`
 - Excel from Microsoft Office
