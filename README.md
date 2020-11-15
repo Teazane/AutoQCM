@@ -7,7 +7,9 @@ L'outil s'appuie sur une base de données constituée de questions associées à
 L'outil doit proposer une interface afin de paramétrer un questionnaire qui sera généré et pourra être soumis au logiciel AMC (https://www.auto-multiple-choice.net/index.fr).
 
 ## Initialiser le projet
-- Installer Python 3
+- Installer Python 3 : https://www.python.org/downloads/
+- Installer Git : https://git-scm.com/downloads 
+- Récupérer le code en clonant le dossier : `git clone https://github.com/Teazane/AutoQCM.git`
 - (optionnel) Installer virtualenv avec la commande : `pip install virtualenv`
 - (optionnel) Créer l'environnement virtuel : `virtualenv env`
 - (optionnel) Activer l'environnement virtuel : `.\env\Scripts\activate`
@@ -15,6 +17,8 @@ L'outil doit proposer une interface afin de paramétrer un questionnaire qui ser
 - Initialiser la variable FLASK_APP (sous Cmd : `set FLASK_APP=App.py`, sous PS : `$env:FLASK_APP="App.py"`, sous Linux : `export FLASK_APP=App.py`)
 
 Il ne reste plus qu'à lancer le projet avec `flask run`.
+
+Pour mettre à jour le projet, lancer `git pull`.
 
 ## Organisation du code
 - App.py : permet de lancer l'appli' Flask
@@ -48,7 +52,7 @@ RuntimeError: The current Numpy installation ('D:\\...\\AutoQCM\\env\\lib\\site-
 Résolution de l'erreur :
 
 La version de Numpy incluse dans la bibliothèque Pandas cause une erreur.
-Il faut donc en changer la version de 1.19.4 à 1.19.4:
+Il faut donc en changer la version de 1.19.4 à 1.19.3 :
 ```
 > pip install --upgrade numpy==1.19.3
 ```
