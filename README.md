@@ -16,6 +16,15 @@ L'outil doit proposer une interface afin de paramétrer un questionnaire qui ser
 
 Il ne reste plus qu'à lancer le projet avec `flask run`.
 
+## Organisation du code
+- App.py : permet de lancer l'appli' Flask
+- app_src : contient les fichiers nécessaires à l'appli' Flask
+    - config.py : contient les variables de configuration de l'appli' Flask
+    - routes.py : contient les routes de l'appli' Flask
+    - templates : dossier contenant les templates HTML à afficher
+- data_management : contient les fichiers nécessaires à la lecture et constitution de la BDD
+    - TODO
+
 ## Built with / using
 - Python (3.6) - see used libs in `requirements.txt`
 - Excel from Microsoft Office
