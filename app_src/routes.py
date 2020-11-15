@@ -5,7 +5,7 @@ env_jinja = Environment(loader=PackageLoader('app_src', 'templates'))
 
 @app.route('/')
 @app.route('/questionnaire')
-def index():
+def questionnaire():
     return render_template(env_jinja.get_template('questionnaire.html'), title='Accueil')
 
 @app.route('/favico.ico')
