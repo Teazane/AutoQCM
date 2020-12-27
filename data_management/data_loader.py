@@ -1,75 +1,62 @@
 from pandas import read_excel, read_csv
 import logging
 
-class DataLoader:
+class QuestionLoader:
     """
-        Classe DataLoader permettant de charger les données depuis un fichier Excel
-        ou CSV au besoin.
+        Classe QuestionLoader permettant de charger la BDD de questions depuis un fichier 
+        Excel ou CSV au besoin.
     """
 
     def __init__(self, bdd_file_path):
         """
-            Constructeur de la classe DataLoader.
+            Constructeur de la classe QuestionLoader.
             Initialise le logger et charge les données du fichier passé en paramètre.
 
             :param bdd_file_path: Chemin du fichier xlsx à lire.
             :type bdd_file_path: string
         """
-        logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%Y/%m:%d %H:%M:%S', level=logging.DEBUG)
-        logging.debug("Lecture du fichier de BDD")
-        self.data_in_xlsx = read_excel(bdd_file_path, sheet_name="Questions")
+        logging.basicConfig(format='%(asctime)s %(levelname)s [%(module)s (%(funcName)s)] %(message)s', datefmt='%Y/%m/%d %H:%M:%S', level=logging.DEBUG)
+        logging.info("Data base file reading...")
+        self.dataframe_from_xlsx = read_excel(bdd_file_path, sheet_name="Questions")
+        logging.debug("File content:\n" + str(self.dataframe_from_xlsx))
 
-    def get_all_questions_for_level(self, level, subset=None):
+    def get_all_questions_with_filter(self, level=None, difficulty=None, notion=None, subject=None, subset=None):
         """
-            Méthode pour sélectionner toutes les questions pour un niveau scolaire donné.
+            Méthode pour sélectionner toutes les questions selon un ensemble de filtres donnés.
+            Ces filtres peuvent être : le niveau scolaire, la difficulté, la notion abordée, ou
+            la matière scolaire concernée.
 
-            :param level: Niveau scolaire donné.
+            :param level: ID du niveau scolaire donné.
+            :param difficulty: ID du niveau de difficulté donné.
+            :param notion: ID de la notion donnée.
+            :param subject: ID de la matière scolaire donnée.
             :param subset: (default=None) Sous-ensemble de questions éventuel.
             :type level: int
-            :type subset: 
-            :return: Ensemble de questions filtrées. 
-            :rtype:
-        """
-        pass
-
-    def get_all_questions_for_difficulty(self, difficulty, subset=None):
-        """
-            Méthode pour sélectionner toutes les questions pour un niveau de difficulté donné.
-
-            :param difficulty: Niveau scolaire donné.
-            :param subset: (default=None) Sous-ensemble de questions éventuel.
             :type difficulty: int
-            :type subset: 
-            :return: Ensemble de questions filtrées. 
-            :rtype:
-        """
-        pass
-
-    def get_all_questions_for_notion(self, notion, subset=None):
-        """
-            Méthode pour sélectionner toutes les questions pour une notion donnée.
-
-            :param notion: Niveau scolaire donné.
-            :param subset: (default=None) Sous-ensemble de questions éventuel.
             :type notion: int
-            :type subset: 
-            :return: Ensemble de questions filtrées. 
-            :rtype:
-        """
-        pass
-
-    def get_all_questions_for_subject(self, subject, subset=None):
-        """
-            Méthode pour sélectionner toutes les questions pour une matière scolaire donnée.
-
-            :param subject: Niveau scolaire donné.
-            :param subset: (default=None) Sous-ensemble de questions éventuel.
             :type subject: int
-            :type subset: 
+            :type subset: pandas.DataFrame
             :return: Ensemble de questions filtrées. 
-            :rtype:
+            :rtype: pandas.DataFrame
         """
-        pass
+        if subset is not None:
+            data_to_filter = subset
+        else:
+            data_to_filter = self.dataframe_from_xlsx
+        # Ici on filtre le data frame avec chaque filtre renseigné, l'un après l'autre
+        if level is not None:
+            data_to_filter = data_to_filter[data_to_filter["Num-Niveau"] == level]
+        if difficulty is not None:
+            data_to_filter = data_to_filter[data_to_filter["Num-Difficulté"] == difficulty]
+        if notion is not None:
+            data_to_filter = data_to_filter[data_to_filter["Num-Rudiment"] == notion]
+        if subject is not None:
+            data_to_filter = data_to_filter[data_to_filter["Num-Discipline"] == subject]
+        return data_to_filter
+        
 
 if __name__ == '__main__':
-    dl = DataLoader("BDD-Questions.xlsx")
+    # Main used for test
+    ql = QuestionLoader("BDD-Questions.xlsx")
+    print(ql.get_all_questions_with_filter(level=9))
+    print(ql.get_all_questions_with_filter(level=9, difficulty=4))
