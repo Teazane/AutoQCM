@@ -1,5 +1,5 @@
 from App import app
-from flask import render_template, url_for
+from flask import render_template
 from jinja2 import Environment, PackageLoader
 env_jinja = Environment(loader=PackageLoader('app_src', 'templates'))
 
