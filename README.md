@@ -26,8 +26,8 @@ Pour mettre à jour le projet, lancer `git pull`.
     - config.py : contient les variables de configuration de l'appli' Flask
     - routes.py : contient les routes de l'appli' Flask
     - templates : dossier contenant les templates HTML à afficher
-- data_management : contient les fichiers nécessaires à la lecture et constitution de la BDD
-    - TODO
+- data_management : contient les fichiers nécessaires à l'utilisation de la BDD
+    - data_loader.py : contient les classes nécessaires à la lecture de la BDD
 
 ## Erreurs connues
 ### Erreur de Numpy lors du chargement des données Excel
